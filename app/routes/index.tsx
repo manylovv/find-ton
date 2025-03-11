@@ -299,7 +299,13 @@ function Home() {
         <color attach="background" args={['#87CEEB']} />
         <ambientLight intensity={1} />
         <RetroSprite joystickDirection={joystickDirection} />
-        <OrbitControls enableZoom={false} />
+        <OrbitControls
+          enableZoom={false}
+          enablePan={false}
+          enableDamping={false}
+          enableRotate={false}
+          enabled={false}
+        />
       </Canvas>
     </div>
   );
