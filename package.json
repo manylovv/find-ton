@@ -14,8 +14,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@pixi/react": "^8.0.0",
     "@tanstack/react-router": "^1.114.15",
     "@tanstack/react-start": "^1.114.15",
+    "pixi.js": "^8.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "vinxi": "^0.5.3"
