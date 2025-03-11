@@ -251,6 +251,20 @@ function Home() {
 
   return (
     <div className="fixed inset-0 w-screen h-screen overflow-hidden">
+      <div className="absolute z-50 top-20 left-0 w-full h-16  justify-center items-center flex">
+        <Joystick
+          baseRadius={60}
+          controllerRadius={30}
+          onDirectionChange={(direction) => {
+            setJoystickDirection(
+              direction === Direction.Center ? null : direction,
+            );
+          }}
+          throttle={50}
+          insideMode={true}
+          directionCount={DirectionCount.Nine}
+        />
+      </div>
       <Canvas
         camera={{
           position: [0, 0, 50],
@@ -267,20 +281,6 @@ function Home() {
         <RetroSprite joystickDirection={joystickDirection} />
         <OrbitControls enableZoom={false} />
       </Canvas>
-      <div className="absolute bottom-20 left-0 w-full h-16  justify-center items-center flex">
-        <Joystick
-          baseRadius={60}
-          controllerRadius={30}
-          onDirectionChange={(direction) => {
-            setJoystickDirection(
-              direction === Direction.Center ? null : direction,
-            );
-          }}
-          throttle={50}
-          insideMode={true}
-          directionCount={DirectionCount.Nine}
-        />
-      </div>
     </div>
   );
 }
