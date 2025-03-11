@@ -22,6 +22,7 @@
     "@tanstack/react-start": "^1.114.15",
     "@types/three": "^0.174.0",
     "pixi.js": "^8.8.1",
+    "rc-joystick": "^1.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwindcss": "^4.0.13",

@@ -3,19 +3,31 @@ import { useEffect, useState, useMemo, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls, useTexture } from '@react-three/drei';
 import * as THREE from 'three';
+import Joystick, { Direction, DirectionCount } from 'rc-joystick';
 
 export const Route = createFileRoute('/')({
   ssr: false,
   component: Home,
 });
 
-function useWASDControls(speed = 0.1) {
+// Define the type for joystick direction
+type JoystickDirectionType = Direction | null;
+
+function useWASDControls(
+  speed = 0.1,
+  joystickDirection: JoystickDirectionType = null,
+) {
   const [position, setPosition] = useState<[number, number, number]>([0, 0, 0]);
   const keysPressed = useRef<Record<string, boolean>>({});
   const [direction, setDirection] = useState<'down' | 'up' | 'left' | 'right'>(
     'down',
   );
   const [isMoving, setIsMoving] = useState(false);
+  const joystickDirectionRef = useRef(joystickDirection);
+
+  useEffect(() => {
+    joystickDirectionRef.current = joystickDirection;
+  }, [joystickDirection]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -44,6 +56,7 @@ function useWASDControls(speed = 0.1) {
 
     let moving = false;
 
+    // Handle keyboard input
     if (keysPressed.current['w']) {
       newPosition[1] += speed;
       setDirection('up');
@@ -65,6 +78,56 @@ function useWASDControls(speed = 0.1) {
       moving = true;
     }
 
+    // Handle joystick input
+    if (joystickDirectionRef.current) {
+      switch (joystickDirectionRef.current) {
+        case Direction.Top:
+          newPosition[1] += speed;
+          setDirection('up');
+          moving = true;
+          break;
+        case Direction.Bottom:
+          newPosition[1] -= speed;
+          setDirection('down');
+          moving = true;
+          break;
+        case Direction.Left:
+          newPosition[0] -= speed;
+          setDirection('left');
+          moving = true;
+          break;
+        case Direction.Right:
+          newPosition[0] += speed;
+          setDirection('right');
+          moving = true;
+          break;
+        case Direction.RightTop:
+          newPosition[0] += speed * 0.7;
+          newPosition[1] += speed * 0.7;
+          setDirection('right');
+          moving = true;
+          break;
+        case Direction.BottomRight:
+          newPosition[0] += speed * 0.7;
+          newPosition[1] -= speed * 0.7;
+          setDirection('right');
+          moving = true;
+          break;
+        case Direction.TopLeft:
+          newPosition[0] -= speed * 0.7;
+          newPosition[1] += speed * 0.7;
+          setDirection('left');
+          moving = true;
+          break;
+        case Direction.LeftBottom:
+          newPosition[0] -= speed * 0.7;
+          newPosition[1] -= speed * 0.7;
+          setDirection('left');
+          moving = true;
+          break;
+      }
+    }
+
     setIsMoving(moving);
 
     if (newPosition[0] !== position[0] || newPosition[1] !== position[1]) {
@@ -75,9 +138,16 @@ function useWASDControls(speed = 0.1) {
   return { position, direction, isMoving };
 }
 
-function RetroSprite() {
+function RetroSprite({
+  joystickDirection,
+}: {
+  joystickDirection: JoystickDirectionType;
+}) {
   const texture = useTexture('/assets/Lavender_16x16RetroCharacter.png');
-  const { position, direction, isMoving } = useWASDControls(0.2);
+  const { position, direction, isMoving } = useWASDControls(
+    0.25,
+    joystickDirection,
+  );
   const [frameIndex, setFrameIndex] = useState(0);
   const frameTimer = useRef(0);
 
@@ -159,6 +229,8 @@ function RetroSprite() {
 
 function Home() {
   const [initialized, setInitialized] = useState(false);
+  const [joystickDirection, setJoystickDirection] =
+    useState<JoystickDirectionType>(null);
 
   useEffect(() => {
     document.body.style.margin = '0';
@@ -192,9 +264,23 @@ function Home() {
       >
         <color attach="background" args={['#87CEEB']} />
         <ambientLight intensity={1} />
-        <RetroSprite />
+        <RetroSprite joystickDirection={joystickDirection} />
         <OrbitControls enableZoom={false} />
       </Canvas>
+      <div className="absolute bottom-20 left-0 w-full h-16 sm:hidden justify-center items-center flex">
+        <Joystick
+          baseRadius={60}
+          controllerRadius={30}
+          onDirectionChange={(direction) => {
+            setJoystickDirection(
+              direction === Direction.Center ? null : direction,
+            );
+          }}
+          throttle={50}
+          insideMode={true}
+          directionCount={DirectionCount.Nine}
+        />
+      </div>
     </div>
   );
 }
