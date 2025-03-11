@@ -250,7 +250,7 @@ function Home() {
   }
 
   return (
-    <div className="fixed inset-0 w-screen h-screen overflow-hidden">
+    <div className="absolute inset-0 w-screen h-screen overflow-hidden">
       <div className="absolute z-50 top-20 left-0 w-full h-16  justify-center items-center flex">
         <Joystick
           baseRadius={60}
