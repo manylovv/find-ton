@@ -267,7 +267,7 @@ function Home() {
         <RetroSprite joystickDirection={joystickDirection} />
         <OrbitControls enableZoom={false} />
       </Canvas>
-      <div className="absolute bottom-20 left-0 w-full h-16 sm:hidden justify-center items-center flex">
+      <div className="absolute bottom-20 left-0 w-full h-16  justify-center items-center flex">
         <Joystick
           baseRadius={60}
           controllerRadius={30}
