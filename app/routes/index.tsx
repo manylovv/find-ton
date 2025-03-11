@@ -250,8 +250,28 @@ function Home() {
   }
 
   return (
-    <div className="absolute inset-0 w-screen h-screen overflow-hidden">
-      <div className="absolute z-50 top-20 left-0 w-full h-16  justify-center items-center flex">
+    <div
+      style={{
+        position: 'fixed',
+        inset: 0,
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
+      }}
+    >
+      <div
+        style={{
+          position: 'absolute',
+          zIndex: 50,
+          bottom: '5rem',
+          left: 0,
+          width: '100%',
+          height: '4rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Joystick
           baseRadius={60}
           controllerRadius={30}
