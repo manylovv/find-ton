@@ -39,7 +39,6 @@ function RootDocument({ children }: Readonly<{ children: ReactNode }>) {
     <html>
       <head>
         <HeadContent />
-        <link rel="stylesheet" href="/index.css" />
       </head>
       <body>
         {children}
