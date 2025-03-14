@@ -1,12 +1,12 @@
-import GameGrid from "./GameGrid";
+import GameGrid from './GameGrid';
 
-import { Canvas } from "@react-three/fiber";
-import RetroSprite from "./RetroSpite";
-import Joystick, { Direction, DirectionCount } from "rc-joystick";
-import { OrthographicCamera } from "@react-three/drei";
-import { useEffect } from "react";
-import { JoystickDirectionType } from "@/types/joystick";
-import { useState } from "react";
+import { Canvas } from '@react-three/fiber';
+import RetroSprite from './RetroSpite';
+import Joystick, { Direction, DirectionCount } from 'rc-joystick';
+import { OrthographicCamera } from '@react-three/drei';
+import { useEffect } from 'react';
+import { JoystickDirectionType } from '@/types/joystick';
+import { useState } from 'react';
 
 function Home() {
   const [initialized, setInitialized] = useState(false);
@@ -14,15 +14,15 @@ function Home() {
     useState<JoystickDirectionType>(null);
 
   useEffect(() => {
-    document.body.style.margin = "0";
-    document.body.style.padding = "0";
-    document.body.style.overflow = "hidden";
+    document.body.style.margin = '0';
+    document.body.style.padding = '0';
+    document.body.style.overflow = 'hidden';
     setInitialized(true);
 
     return () => {
-      document.body.style.margin = "";
-      document.body.style.padding = "";
-      document.body.style.overflow = "";
+      document.body.style.margin = '';
+      document.body.style.padding = '';
+      document.body.style.overflow = '';
     };
   }, []);
 
@@ -33,30 +33,33 @@ function Home() {
   return (
     <div
       style={{
-        position: "fixed",
+        position: 'fixed',
         inset: 0,
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-      }}>
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
+      }}
+    >
       <div
+        id="UI-layer"
         style={{
-          position: "absolute",
+          position: 'absolute',
           zIndex: 50,
-          bottom: "10rem",
+          bottom: '10rem',
           left: 0,
-          width: "100%",
-          height: "4rem",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}>
+          width: '100%',
+          height: '4rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Joystick
           baseRadius={60}
           controllerRadius={30}
           onDirectionChange={(direction) => {
             setJoystickDirection(
-              direction === Direction.Center ? null : direction
+              direction === Direction.Center ? null : direction,
             );
           }}
           throttle={50}
@@ -64,12 +67,15 @@ function Home() {
           directionCount={DirectionCount.Nine}
         />
       </div>
+
       <Canvas
+        id="threejs-layer"
         style={{
-          width: "100vw",
-          height: "100vh",
-        }}>
-        <color attach="background" args={["#87CEEB"]} />
+          width: '100vw',
+          height: '100vh',
+        }}
+      >
+        <color attach="background" args={['#87CEEB']} />
         <OrthographicCamera
           makeDefault
           position={[0, 0, 100]}
