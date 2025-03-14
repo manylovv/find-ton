@@ -19,7 +19,6 @@ function useWASDControls(
   // Add an offset to fix the left/right movement issues
   const gameAreaWidth = 100;
   const gameAreaHeight = 99;
-  const leftOffset = 0; // Add offset for left side
   const rightOffset = 2; // Add offset for right side
   const halfWidth = gameAreaWidth / 2;
   const halfHeight = gameAreaHeight / 2;
@@ -127,8 +126,11 @@ function useWASDControls(
       }
     }
 
-    // Constrain the player within the game area boundaries
-    newPosition[0] = Math.max(-halfWidth, Math.min(halfWidth, newPosition[0]));
+    // Constrain the player within the game area boundaries with adjusted offsets
+    newPosition[0] = Math.max(
+      -halfWidth,
+      Math.min(halfWidth - rightOffset, newPosition[0])
+    );
     newPosition[1] = Math.max(
       -halfHeight,
       Math.min(halfHeight, newPosition[1])
