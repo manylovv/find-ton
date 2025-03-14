@@ -15,9 +15,12 @@ function useWASDControls(
   const [isMoving, setIsMoving] = useState(false);
   const joystickDirectionRef = useRef(joystickDirection);
 
-  // Define game area boundaries - make it smaller to match the grid
-  const gameAreaWidth = 98;
-  const gameAreaHeight = 98;
+  // Define game area boundaries - adjust to fix movement constraints
+  // Add an offset to fix the left/right movement issues
+  const gameAreaWidth = 100;
+  const gameAreaHeight = 99;
+  const leftOffset = 0; // Add offset for left side
+  const rightOffset = 2; // Add offset for right side
   const halfWidth = gameAreaWidth / 2;
   const halfHeight = gameAreaHeight / 2;
 
