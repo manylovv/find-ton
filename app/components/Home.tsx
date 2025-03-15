@@ -24,9 +24,9 @@ function Home() {
   const [minedPrizesCount, setMinedPrizesCount] = useState(0);
 
   // Grid size should match the one in GameGrid
-  const gridSize = 100;
+  const gridSize = 20;
   // World tile size calculation (should match the one in GameGrid)
-  const worldTileSize = gridSize / 50;
+  const worldTileSize = gridSize / 10;
 
   // Distance threshold for showing the Mine button (in tile units)
   // Set to exactly 2 tiles as requested

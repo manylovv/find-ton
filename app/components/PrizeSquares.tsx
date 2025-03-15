@@ -21,7 +21,7 @@ const PrizeSquares = ({
   prizes: externalPrizes,
 }: PrizeSquaresProps) => {
   // Calculate the size of each tile in world units
-  const worldTileSize = gridSize / 50;
+  const worldTileSize = gridSize / 10;
 
   // Calculate how many tiles we need to cover the grid
   const tilesNeeded = Math.ceil(gridSize / worldTileSize);

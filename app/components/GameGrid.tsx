@@ -20,7 +20,7 @@ interface GameGridProps {
 
 function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
   // Make the grid smaller - 100x100 for better phone display fit
-  const gridSize = 100;
+  const gridSize = 20;
 
   // Load the tileset texture
   const tilesetTexture = useTexture("/assets/TX Tileset Grass (1).png");
@@ -44,7 +44,7 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
     const tiles: ReactNode[] = [];
 
     // Calculate the size of each tile in world units - make it much smaller
-    const worldTileSize = gridSize / 50; // Reduced from 10 to 50 for much smaller tiles
+    const worldTileSize = gridSize / 10; // Reduced from 10 to 50 for much smaller tiles
 
     // Calculate how many tiles we need to cover the grid
     const tilesNeeded = Math.ceil(gridSize / worldTileSize);
@@ -142,7 +142,7 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
 
     const tiles: ReactNode[] = [];
     const tileSize = 16;
-    const worldTileSize = gridSize / 50;
+    const worldTileSize = gridSize / 10;
 
     // We'll use a specific stone tile from the tileset
     const stoneTileX = 9; // Stone tile position

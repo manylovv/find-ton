@@ -17,8 +17,9 @@ function useWASDControls(
 
   // Define game area boundaries - adjust to fix movement constraints
   // Add an offset to fix the left/right movement issues
-  const gameAreaWidth = 100;
-  const gameAreaHeight = 99;
+  const gameAreaWidth = 20; // 100
+  // use gameAreaWidth - 1 for better UI
+  const gameAreaHeight = 19; // 99
   const rightOffset = 2; // Add offset for right side
   const halfWidth = gameAreaWidth / 2;
   const halfHeight = gameAreaHeight / 2;
