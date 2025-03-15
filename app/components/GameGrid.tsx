@@ -3,6 +3,7 @@ import { useMemo } from "react";
 import * as THREE from "three";
 import { ReactNode } from "react";
 import { mapCoordinates } from "../mapCoordinates";
+import PrizeSquares, { PrizeSquare } from "./PrizeSquares";
 
 // Interface for tile data to be stored
 interface TileData {
@@ -12,7 +13,11 @@ interface TileData {
   tileY: number;
 }
 
-function GameGrid() {
+interface GameGridProps {
+  onPrizesGenerated?: (prizes: PrizeSquare[]) => void;
+}
+
+function GameGrid({ onPrizesGenerated }: GameGridProps) {
   // Make the grid smaller - 100x100 for better phone display fit
   const gridSize = 100;
 
@@ -247,6 +252,9 @@ function GameGrid() {
 
       {/* Render the tiled grid */}
       {tiledGrid}
+
+      {/* Render the prize squares on top */}
+      <PrizeSquares gridSize={gridSize} onPrizesGenerated={onPrizesGenerated} />
     </group>
   );
 }

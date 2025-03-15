@@ -6,11 +6,15 @@ import useWASDControls from "@/hooks/useWASDControls";
 import CameraFollower from "@/components/CameraFollower";
 import * as THREE from "three";
 
+interface RetroSpriteProps {
+  joystickDirection: JoystickDirectionType;
+  onPositionUpdate?: (position: [number, number, number]) => void;
+}
+
 function RetroSprite({
   joystickDirection,
-}: {
-  joystickDirection: JoystickDirectionType;
-}) {
+  onPositionUpdate,
+}: RetroSpriteProps) {
   const texture = useTexture("/assets/Lavender_16x16RetroCharacter.png");
   const { position, direction, isMoving } = useWASDControls(
     0.25,
@@ -23,7 +27,12 @@ function RetroSprite({
   // Update the position reference when position changes
   useEffect(() => {
     positionRef.current = position;
-  }, [position]);
+
+    // Call the onPositionUpdate callback when position changes
+    if (onPositionUpdate) {
+      onPositionUpdate(position);
+    }
+  }, [position, onPositionUpdate]);
 
   const frameRate = 8;
   const frameDuration = 1 / frameRate;
