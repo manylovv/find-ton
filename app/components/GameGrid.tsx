@@ -15,9 +15,10 @@ interface TileData {
 
 interface GameGridProps {
   onPrizesGenerated?: (prizes: PrizeSquare[]) => void;
+  prizeLocations?: PrizeSquare[]; // Add this prop to receive updated prizes from parent
 }
 
-function GameGrid({ onPrizesGenerated }: GameGridProps) {
+function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
   // Make the grid smaller - 100x100 for better phone display fit
   const gridSize = 100;
 
@@ -254,7 +255,11 @@ function GameGrid({ onPrizesGenerated }: GameGridProps) {
       {tiledGrid}
 
       {/* Render the prize squares on top */}
-      <PrizeSquares gridSize={gridSize} onPrizesGenerated={onPrizesGenerated} />
+      <PrizeSquares
+        gridSize={gridSize}
+        onPrizesGenerated={onPrizesGenerated}
+        prizes={prizeLocations}
+      />
     </group>
   );
 }
