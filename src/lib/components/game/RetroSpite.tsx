@@ -1,25 +1,19 @@
 import { useTexture } from "@react-three/drei";
-import { useRef, useMemo, useState, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
-import { JoystickDirectionType } from "@/types/joystick";
-import useWASDControls from "@/hooks/useWASDControls";
-import CameraFollower from "@/components/CameraFollower";
+import { useEffect, useMemo, useRef, useState } from "react";
 import * as THREE from "three";
+import CameraFollower from "~/lib/components/game/CameraFollower";
+import useWASDControls from "~/lib/hooks/useWASDControls";
+import { JoystickDirectionType } from "~/lib/types/joystick";
 
 interface RetroSpriteProps {
   joystickDirection: JoystickDirectionType;
   onPositionUpdate?: (position: [number, number, number]) => void;
 }
 
-function RetroSprite({
-  joystickDirection,
-  onPositionUpdate,
-}: RetroSpriteProps) {
+function RetroSprite({ joystickDirection, onPositionUpdate }: RetroSpriteProps) {
   const texture = useTexture("/assets/Lavender_16x16RetroCharacter.png");
-  const { position, direction, isMoving } = useWASDControls(
-    0.25,
-    joystickDirection
-  );
+  const { position, direction, isMoving } = useWASDControls(0.25, joystickDirection);
   const [frameIndex, setFrameIndex] = useState(0);
   const frameTimer = useRef(0);
   const positionRef = useRef(position);
@@ -107,11 +101,7 @@ function RetroSprite({
     <>
       <CameraFollower target={positionRef} />
       <sprite position={position} scale={[3, 3, 1]}>
-        <spriteMaterial
-          map={spriteTexture}
-          transparent={true}
-          alphaTest={0.1}
-        />
+        <spriteMaterial map={spriteTexture} transparent={true} alphaTest={0.1} />
       </sprite>
     </>
   );

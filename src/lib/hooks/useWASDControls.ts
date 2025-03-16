@@ -1,17 +1,12 @@
-import { useState, useRef, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Direction } from "rc-joystick";
-import { JoystickDirectionType } from "@/types/joystick";
+import { useEffect, useRef, useState } from "react";
+import { JoystickDirectionType } from "~/lib/types/joystick";
 
-function useWASDControls(
-  speed = 0.3,
-  joystickDirection: JoystickDirectionType = null
-) {
+function useWASDControls(speed = 0.3, joystickDirection: JoystickDirectionType = null) {
   const [position, setPosition] = useState<[number, number, number]>([0, 0, 0]);
   const keysPressed = useRef<Record<string, boolean>>({});
-  const [direction, setDirection] = useState<"down" | "up" | "left" | "right">(
-    "down"
-  );
+  const [direction, setDirection] = useState<"down" | "up" | "left" | "right">("down");
   const [isMoving, setIsMoving] = useState(false);
   const joystickDirectionRef = useRef(joystickDirection);
 
@@ -130,12 +125,9 @@ function useWASDControls(
     // Constrain the player within the game area boundaries with adjusted offsets
     newPosition[0] = Math.max(
       -halfWidth,
-      Math.min(halfWidth - rightOffset, newPosition[0])
+      Math.min(halfWidth - rightOffset, newPosition[0]),
     );
-    newPosition[1] = Math.max(
-      -halfHeight,
-      Math.min(halfHeight, newPosition[1])
-    );
+    newPosition[1] = Math.max(-halfHeight, Math.min(halfHeight, newPosition[1]));
 
     setIsMoving(moving);
 

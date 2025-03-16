@@ -1,8 +1,7 @@
 import { useTexture } from "@react-three/drei";
-import { useMemo } from "react";
+import { ReactNode, useMemo } from "react";
 import * as THREE from "three";
-import { ReactNode } from "react";
-import { mapCoordinates } from "../mapCoordinates";
+import { mapCoordinates } from "~/lib/constants/mapCoordinates";
 import PrizeSquares, { PrizeSquare } from "./PrizeSquares";
 
 // Interface for tile data to be stored
@@ -70,9 +69,10 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
           <sprite
             key={`${tile.x}-${tile.y}`}
             position={[tile.x * worldTileSize, tile.y * worldTileSize, 0]}
-            scale={[worldTileSize, worldTileSize, 1]}>
+            scale={[worldTileSize, worldTileSize, 1]}
+          >
             <spriteMaterial map={tileTexture} />
-          </sprite>
+          </sprite>,
         );
       });
     } else {
@@ -100,10 +100,8 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
           // Calculate UV coordinates for the selected tile
           const u1 = (randomTileX * tileSize) / tilesetTexture.image.width;
           const v1 = (randomTileY * tileSize) / tilesetTexture.image.height;
-          const u2 =
-            ((randomTileX + 1) * tileSize) / tilesetTexture.image.width;
-          const v2 =
-            ((randomTileY + 1) * tileSize) / tilesetTexture.image.height;
+          const u2 = ((randomTileX + 1) * tileSize) / tilesetTexture.image.width;
+          const v2 = ((randomTileY + 1) * tileSize) / tilesetTexture.image.height;
 
           // Clone the texture and set the UV mapping for this specific tile
           const tileTexture = tilesetTexture.clone();
@@ -115,9 +113,10 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
             <sprite
               key={`${x}-${y}`}
               position={[x * worldTileSize, y * worldTileSize, 0]}
-              scale={[worldTileSize, worldTileSize, 1]}>
+              scale={[worldTileSize, worldTileSize, 1]}
+            >
               <spriteMaterial map={tileTexture} />
-            </sprite>
+            </sprite>,
           );
         }
       }
@@ -125,11 +124,7 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
       // Output the generated map data to console for copying into the file
       console.log("COPY THIS MAP DATA INTO THE MAP_DATA CONSTANT IN THE FILE:");
       console.log(
-        JSON.stringify(
-          { tiles: generatedTiles, timestamp: Date.now() },
-          null,
-          2
-        )
+        JSON.stringify({ tiles: generatedTiles, timestamp: Date.now() }, null, 2),
       );
     }
 
@@ -177,9 +172,10 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
           <sprite
             key={`top-${i}-${j}`}
             position={[i * worldTileSize, (innerEdge + j) * worldTileSize, 0]}
-            scale={[worldTileSize, worldTileSize, 1]}>
+            scale={[worldTileSize, worldTileSize, 1]}
+          >
             <spriteMaterial map={tileTexture} />
-          </sprite>
+          </sprite>,
         );
       }
 
@@ -192,14 +188,11 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
         tiles.push(
           <sprite
             key={`bottom-${i}-${j}`}
-            position={[
-              i * worldTileSize,
-              (-innerEdge - j - 1) * worldTileSize,
-              0,
-            ]}
-            scale={[worldTileSize, worldTileSize, 1]}>
+            position={[i * worldTileSize, (-innerEdge - j - 1) * worldTileSize, 0]}
+            scale={[worldTileSize, worldTileSize, 1]}
+          >
             <spriteMaterial map={tileTexture} />
-          </sprite>
+          </sprite>,
         );
       }
     }
@@ -215,14 +208,11 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
         tiles.push(
           <sprite
             key={`left-${i}-${j}`}
-            position={[
-              (-innerEdge - i - 1) * worldTileSize,
-              j * worldTileSize,
-              0,
-            ]}
-            scale={[worldTileSize, worldTileSize, 1]}>
+            position={[(-innerEdge - i - 1) * worldTileSize, j * worldTileSize, 0]}
+            scale={[worldTileSize, worldTileSize, 1]}
+          >
             <spriteMaterial map={tileTexture} />
-          </sprite>
+          </sprite>,
         );
       }
 
@@ -236,9 +226,10 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
           <sprite
             key={`right-${i}-${j}`}
             position={[(innerEdge + i) * worldTileSize, j * worldTileSize, 0]}
-            scale={[worldTileSize, worldTileSize, 1]}>
+            scale={[worldTileSize, worldTileSize, 1]}
+          >
             <spriteMaterial map={tileTexture} />
-          </sprite>
+          </sprite>,
         );
       }
     }

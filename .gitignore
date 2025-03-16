@@ -1,6 +1,22 @@
 node_modules
+package-lock.json
+yarn.lock
+
 .DS_Store
-dist
+.cache
+.env
+
+.data
+.vercel
+.output
 .vinxi
-*.log
-count.txt
+.wrangler
+.netlify
+dist
+/build/
+/api/
+/server/build
+/public/build
+
+# docker-compose db
+db

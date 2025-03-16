@@ -1,13 +1,13 @@
-import GameGrid from "./GameGrid";
+import GameGrid from './GameGrid';
 
-import { Canvas } from "@react-three/fiber";
-import RetroSprite from "./RetroSpite";
-import Joystick, { Direction, DirectionCount } from "rc-joystick";
-import { OrthographicCamera } from "@react-three/drei";
-import { useEffect, useRef } from "react";
-import { JoystickDirectionType } from "@/types/joystick";
-import { useState } from "react";
-import { PrizeSquare } from "./PrizeSquares";
+import { Canvas } from '@react-three/fiber';
+import RetroSprite from './RetroSpite';
+import Joystick, { Direction, DirectionCount } from 'rc-joystick';
+import { OrthographicCamera } from '@react-three/drei';
+import { useEffect, useRef } from 'react';
+import { JoystickDirectionType } from '@/lib/types/joystick';
+import { useState } from 'react';
+import { PrizeSquare } from './PrizeSquares';
 
 function Home() {
   const [initialized, setInitialized] = useState(false);
@@ -23,6 +23,8 @@ function Home() {
   const [showMiningSuccess, setShowMiningSuccess] = useState(false);
   const [minedPrizesCount, setMinedPrizesCount] = useState(0);
   const [balance, setBalance] = useState(0);
+
+  console.log('rendering Home');
 
   // Grid size should match the one in GameGrid
   const gridSize = 20;
@@ -42,15 +44,15 @@ function Home() {
   const MAX_MINING_PROGRESS = 100;
 
   useEffect(() => {
-    document.body.style.margin = "0";
-    document.body.style.padding = "0";
-    document.body.style.overflow = "hidden";
+    document.body.style.margin = '0';
+    document.body.style.padding = '0';
+    document.body.style.overflow = 'hidden';
     setInitialized(true);
 
     return () => {
-      document.body.style.margin = "";
-      document.body.style.padding = "";
-      document.body.style.overflow = "";
+      document.body.style.margin = '';
+      document.body.style.padding = '';
+      document.body.style.overflow = '';
     };
   }, []);
 
@@ -101,7 +103,7 @@ function Home() {
     // Debug information
     if (isNear && closestPrize) {
       console.log(
-        `Player near prize at (${closestPrize.x}, ${closestPrize.y}), distance: ${nearestDistance.toFixed(2)} tiles, progress: ${closestPrize.progress}%`
+        `Player near prize at (${closestPrize.x}, ${closestPrize.y}), distance: ${nearestDistance.toFixed(2)} tiles, progress: ${closestPrize.progress}%`,
       );
     }
   }, [
@@ -129,7 +131,7 @@ function Home() {
       ...updatedPrizes[nearestPrizeIndex],
       progress: Math.min(
         updatedPrizes[nearestPrizeIndex].progress + MINING_INCREMENT,
-        MAX_MINING_PROGRESS
+        MAX_MINING_PROGRESS,
       ),
     };
 
@@ -138,13 +140,13 @@ function Home() {
 
     // Log the mining action
     console.log(
-      `Mining prize at (${updatedPrizes[nearestPrizeIndex].x}, ${updatedPrizes[nearestPrizeIndex].y}), progress: ${updatedPrizes[nearestPrizeIndex].progress}%`
+      `Mining prize at (${updatedPrizes[nearestPrizeIndex].x}, ${updatedPrizes[nearestPrizeIndex].y}), progress: ${updatedPrizes[nearestPrizeIndex].progress}%`,
     );
 
     // Check if the prize is fully mined
     if (updatedPrizes[nearestPrizeIndex].progress >= MAX_MINING_PROGRESS) {
       console.log(
-        `Prize at (${updatedPrizes[nearestPrizeIndex].x}, ${updatedPrizes[nearestPrizeIndex].y}) fully mined!`
+        `Prize at (${updatedPrizes[nearestPrizeIndex].x}, ${updatedPrizes[nearestPrizeIndex].y}) fully mined!`,
       );
 
       // Show success message
@@ -168,45 +170,48 @@ function Home() {
   return (
     <div
       style={{
-        position: "fixed",
+        position: 'fixed',
         inset: 0,
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-      }}>
+        width: '100vw',
+        height: '100vh',
+        overflow: 'hidden',
+      }}
+    >
       <div
         style={{
-          position: "fixed",
-          top: "1rem",
-          left: "1rem",
-          fontSize: "1rem",
-          color: "white",
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          padding: "0.5rem",
-          borderRadius: "0.5rem",
+          position: 'fixed',
+          top: '1rem',
+          left: '1rem',
+          fontSize: '1rem',
+          color: 'white',
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          padding: '0.5rem',
+          borderRadius: '0.5rem',
           zIndex: 100,
-        }}>
+        }}
+      >
         Balance: {balance} TON
       </div>
       <div
         id="UI-layer"
         style={{
-          position: "absolute",
+          position: 'absolute',
           zIndex: 50,
-          bottom: "10rem",
-          padding: "0 3rem",
-          width: "100%",
-          height: "4rem",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}>
+          bottom: '10rem',
+          padding: '0 3rem',
+          width: '100%',
+          height: '4rem',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+        }}
+      >
         <Joystick
           baseRadius={60}
           controllerRadius={30}
           onDirectionChange={(direction) => {
             setJoystickDirection(
-              direction === Direction.Center ? null : direction
+              direction === Direction.Center ? null : direction,
             );
           }}
           throttle={50}
@@ -217,17 +222,18 @@ function Home() {
           <div
             onClick={handleMine}
             style={{
-              fontSize: "2rem",
-              fontWeight: "bold",
-              color: "white",
-              textAlign: "center",
-              border: "4px solid white",
-              borderRadius: "1rem",
-              padding: "0.5rem",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              cursor: "pointer",
-              position: "relative",
-            }}>
+              fontSize: '2rem',
+              fontWeight: 'bold',
+              color: 'white',
+              textAlign: 'center',
+              border: '4px solid white',
+              borderRadius: '1rem',
+              padding: '0.5rem',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              cursor: 'pointer',
+              position: 'relative',
+            }}
+          >
             Mine
           </div>
         )}
@@ -237,28 +243,29 @@ function Home() {
       {showMiningSuccess && (
         <div
           style={{
-            position: "absolute",
-            top: "20%",
-            left: "50%",
-            transform: "translateX(-50%)",
+            position: 'absolute',
+            top: '20%',
+            left: '50%',
+            transform: 'translateX(-50%)',
             zIndex: 100,
-            backgroundColor: "rgba(0, 0, 0, 0.8)",
-            color: "#FFD700", // Gold color
-            padding: "1rem 2rem",
-            borderRadius: "1rem",
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            textAlign: "center",
-            animation: "fadeInOut 3s ease-in-out",
-          }}>
-          <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: '#FFD700', // Gold color
+            padding: '1rem 2rem',
+            borderRadius: '1rem',
+            fontSize: '1.5rem',
+            fontWeight: 'bold',
+            textAlign: 'center',
+            animation: 'fadeInOut 3s ease-in-out',
+          }}
+        >
+          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
             🎉 Success! 🎉
           </div>
           Prize successfully mined!
-          <div style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
+          <div style={{ fontSize: '1rem', marginTop: '0.5rem' }}>
             {minedPrizesCount} of 3 prizes collected
           </div>
-          <div style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
+          <div style={{ fontSize: '1rem', marginTop: '0.5rem' }}>
             Balance: {balance} TON
           </div>
         </div>
@@ -281,10 +288,11 @@ function Home() {
       <Canvas
         id="threejs-layer"
         style={{
-          width: "100vw",
-          height: "100vh",
-        }}>
-        <color attach="background" args={["#87CEEB"]} />
+          width: '100vw',
+          height: '100vh',
+        }}
+      >
+        <color attach="background" args={['#87CEEB']} />
         <OrthographicCamera
           makeDefault
           position={[0, 0, 100]}
