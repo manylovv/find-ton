@@ -47,6 +47,7 @@ function RetroSprite({ joystickDirection, onPositionUpdate }: RetroSpriteProps) 
   const spriteTexture = useMemo(() => {
     if (!texture) return null;
 
+    // eslint-disable-next-line react-compiler/react-compiler
     texture.magFilter = THREE.NearestFilter;
     texture.minFilter = THREE.NearestFilter;
 

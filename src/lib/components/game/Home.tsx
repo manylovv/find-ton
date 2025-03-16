@@ -1,22 +1,20 @@
-import GameGrid from './GameGrid';
+import GameGrid from "./GameGrid";
 
-import { Canvas } from '@react-three/fiber';
-import RetroSprite from './RetroSpite';
-import Joystick, { Direction, DirectionCount } from 'rc-joystick';
-import { OrthographicCamera } from '@react-three/drei';
-import { useEffect, useRef } from 'react';
-import { JoystickDirectionType } from '@/lib/types/joystick';
-import { useState } from 'react';
-import { PrizeSquare } from './PrizeSquares';
+import { OrthographicCamera } from "@react-three/drei";
+import { Canvas } from "@react-three/fiber";
+import Joystick, { Direction, DirectionCount } from "rc-joystick";
+import { useEffect, useState } from "react";
+import { JoystickDirectionType } from "~/lib/types/joystick";
+import { PrizeSquare } from "./PrizeSquares";
+import RetroSprite from "./RetroSpite";
 
 function Home() {
   const [initialized, setInitialized] = useState(false);
-  const [joystickDirection, setJoystickDirection] =
-    useState<JoystickDirectionType>(null);
+  const [joystickDirection, setJoystickDirection] = useState<JoystickDirectionType>(null);
   const [prizeLocations, setPrizeLocations] = useState<PrizeSquare[]>([]);
-  const [playerPosition, setPlayerPosition] = useState<
-    [number, number, number]
-  >([0, 0, 0]);
+  const [playerPosition, setPlayerPosition] = useState<[number, number, number]>([
+    0, 0, 0,
+  ]);
   const [isNearPrize, setIsNearPrize] = useState(false);
   const [nearestPrize, setNearestPrize] = useState<PrizeSquare | null>(null);
   const [nearestPrizeIndex, setNearestPrizeIndex] = useState<number>(-1);
@@ -24,7 +22,7 @@ function Home() {
   const [minedPrizesCount, setMinedPrizesCount] = useState(0);
   const [balance, setBalance] = useState(0);
 
-  console.log('rendering Home');
+  console.log("rendering Home");
 
   // Grid size should match the one in GameGrid
   const gridSize = 20;
@@ -36,23 +34,23 @@ function Home() {
   const PRIZE_INTERACTION_DISTANCE_IN_TILES = 1.6;
 
   // Convert tile distance to world units
-  const PRIZE_INTERACTION_DISTANCE =
-    PRIZE_INTERACTION_DISTANCE_IN_TILES * worldTileSize;
+  // const PRIZE_INTERACTION_DISTANCE = PRIZE_INTERACTION_DISTANCE_IN_TILES * worldTileSize;
 
   // Mining increment value
   const MINING_INCREMENT = 5;
   const MAX_MINING_PROGRESS = 100;
 
   useEffect(() => {
-    document.body.style.margin = '0';
-    document.body.style.padding = '0';
-    document.body.style.overflow = 'hidden';
+    document.body.style.margin = "0";
+    document.body.style.padding = "0";
+    document.body.style.overflow = "hidden";
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setInitialized(true);
 
     return () => {
-      document.body.style.margin = '';
-      document.body.style.padding = '';
-      document.body.style.overflow = '';
+      document.body.style.margin = "";
+      document.body.style.padding = "";
+      document.body.style.overflow = "";
     };
   }, []);
 
@@ -96,8 +94,11 @@ function Home() {
       }
     }
 
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setIsNearPrize(isNear);
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setNearestPrize(closestPrize);
+    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
     setNearestPrizeIndex(closestPrizeIndex);
 
     // Debug information
@@ -170,23 +171,23 @@ function Home() {
   return (
     <div
       style={{
-        position: 'fixed',
+        position: "fixed",
         inset: 0,
-        width: '100vw',
-        height: '100vh',
-        overflow: 'hidden',
+        width: "100vw",
+        height: "100vh",
+        overflow: "hidden",
       }}
     >
       <div
         style={{
-          position: 'fixed',
-          top: '1rem',
-          left: '1rem',
-          fontSize: '1rem',
-          color: 'white',
-          backgroundColor: 'rgba(0, 0, 0, 0.5)',
-          padding: '0.5rem',
-          borderRadius: '0.5rem',
+          position: "fixed",
+          top: "1rem",
+          left: "1rem",
+          fontSize: "1rem",
+          color: "white",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          padding: "0.5rem",
+          borderRadius: "0.5rem",
           zIndex: 100,
         }}
       >
@@ -195,24 +196,22 @@ function Home() {
       <div
         id="UI-layer"
         style={{
-          position: 'absolute',
+          position: "absolute",
           zIndex: 50,
-          bottom: '10rem',
-          padding: '0 3rem',
-          width: '100%',
-          height: '4rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          bottom: "10rem",
+          padding: "0 3rem",
+          width: "100%",
+          height: "4rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
         <Joystick
           baseRadius={60}
           controllerRadius={30}
           onDirectionChange={(direction) => {
-            setJoystickDirection(
-              direction === Direction.Center ? null : direction,
-            );
+            setJoystickDirection(direction === Direction.Center ? null : direction);
           }}
           throttle={50}
           insideMode={true}
@@ -222,16 +221,16 @@ function Home() {
           <div
             onClick={handleMine}
             style={{
-              fontSize: '2rem',
-              fontWeight: 'bold',
-              color: 'white',
-              textAlign: 'center',
-              border: '4px solid white',
-              borderRadius: '1rem',
-              padding: '0.5rem',
-              backgroundColor: 'rgba(0, 0, 0, 0.5)',
-              cursor: 'pointer',
-              position: 'relative',
+              fontSize: "2rem",
+              fontWeight: "bold",
+              color: "white",
+              textAlign: "center",
+              border: "4px solid white",
+              borderRadius: "1rem",
+              padding: "0.5rem",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+              cursor: "pointer",
+              position: "relative",
             }}
           >
             Mine
@@ -243,56 +242,40 @@ function Home() {
       {showMiningSuccess && (
         <div
           style={{
-            position: 'absolute',
-            top: '20%',
-            left: '50%',
-            transform: 'translateX(-50%)',
+            position: "absolute",
+            top: "20%",
+            left: "50%",
+            transform: "translateX(-50%)",
             zIndex: 100,
-            backgroundColor: 'rgba(0, 0, 0, 0.8)',
-            color: '#FFD700', // Gold color
-            padding: '1rem 2rem',
-            borderRadius: '1rem',
-            fontSize: '1.5rem',
-            fontWeight: 'bold',
-            textAlign: 'center',
-            animation: 'fadeInOut 3s ease-in-out',
+            backgroundColor: "rgba(0, 0, 0, 0.8)",
+            color: "#FFD700", // Gold color
+            padding: "1rem 2rem",
+            borderRadius: "1rem",
+            fontSize: "1.5rem",
+            fontWeight: "bold",
+            textAlign: "center",
+            animation: "fadeInOut 3s ease-in-out",
           }}
         >
-          <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>
-            🎉 Success! 🎉
-          </div>
+          <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🎉 Success! 🎉</div>
           Prize successfully mined!
-          <div style={{ fontSize: '1rem', marginTop: '0.5rem' }}>
+          <div style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
             {minedPrizesCount} of 3 prizes collected
           </div>
-          <div style={{ fontSize: '1rem', marginTop: '0.5rem' }}>
+          <div style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
             Balance: {balance} TON
           </div>
         </div>
       )}
 
-      {/* Add CSS animation for the success message */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @keyframes fadeInOut {
-            0% { opacity: 0; transform: translateY(-20px) translateX(-50%); }
-            15% { opacity: 1; transform: translateY(0) translateX(-50%); }
-            85% { opacity: 1; transform: translateY(0) translateX(-50%); }
-            100% { opacity: 0; transform: translateY(-20px) translateX(-50%); }
-          }
-        `,
-        }}
-      />
-
       <Canvas
         id="threejs-layer"
         style={{
-          width: '100vw',
-          height: '100vh',
+          width: "100vw",
+          height: "100vh",
         }}
       >
-        <color attach="background" args={['#87CEEB']} />
+        <color attach="background" args={["#87CEEB"]} />
         <OrthographicCamera
           makeDefault
           position={[0, 0, 100]}
@@ -301,10 +284,7 @@ function Home() {
           far={1000}
         />
         <ambientLight intensity={1} />
-        <GameGrid
-          onPrizesGenerated={setPrizeLocations}
-          prizeLocations={prizeLocations}
-        />
+        <GameGrid onPrizesGenerated={setPrizeLocations} prizeLocations={prizeLocations} />
         <RetroSprite
           joystickDirection={joystickDirection}
           onPositionUpdate={handlePlayerPositionUpdate}

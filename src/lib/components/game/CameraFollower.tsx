@@ -1,20 +1,22 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
+import { MutableRefObject } from "react";
 
-import { useThree } from "@react-three/fiber";
+interface CameraFollowerProps {
+  target: MutableRefObject<[number, number, number]>;
+}
 
-function CameraFollower({ target }) {
+function CameraFollower({ target }: CameraFollowerProps) {
   const { camera } = useThree();
 
   useFrame(() => {
     if (!target.current) return;
 
-    // Get the current target position
     const targetPosition = target.current;
 
-    // For 2D, directly set the camera position to follow the player
-    // This ensures precise movement tracking
-    camera.position.x = targetPosition[0];
-    camera.position.y = targetPosition[1];
+    const newPosition = camera.position.clone();
+    newPosition.x = targetPosition[0];
+    newPosition.y = targetPosition[1];
+    camera.position.copy(newPosition);
   });
 
   return null;

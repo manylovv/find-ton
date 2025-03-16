@@ -1,6 +1,5 @@
-import { useMemo, useEffect } from "react";
+import { ReactNode, useEffect, useMemo } from "react";
 import * as THREE from "three";
-import { ReactNode } from "react";
 
 interface PrizeSquare {
   x: number;
@@ -45,12 +44,7 @@ const PrizeSquares = ({
     console.log(`Minimum distance between prizes: ${minDistance} tiles`);
 
     // Helper function to calculate distance between two points
-    const calculateDistance = (
-      x1: number,
-      y1: number,
-      x2: number,
-      y2: number
-    ) => {
+    const calculateDistance = (x1: number, y1: number, x2: number, y2: number) => {
       return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     };
 
@@ -74,10 +68,8 @@ const PrizeSquares = ({
 
       while (!foundPosition && attempts < 100) {
         // Generate random coordinates within the playable area
-        randomX =
-          Math.floor(Math.random() * (maxCoord - minCoord + 1)) + minCoord;
-        randomY =
-          Math.floor(Math.random() * (maxCoord - minCoord + 1)) + minCoord;
+        randomX = Math.floor(Math.random() * (maxCoord - minCoord + 1)) + minCoord;
+        randomY = Math.floor(Math.random() * (maxCoord - minCoord + 1)) + minCoord;
 
         // Check if this position is far enough from existing prizes
         if (isFarEnough(randomX, randomY)) {
@@ -91,7 +83,7 @@ const PrizeSquares = ({
       // but only if we already have fewer than 2 prizes (to ensure at least some prizes appear)
       if (!foundPosition) {
         console.warn(
-          `Couldn't find an ideal position for prize ${i + 1} after ${attempts} attempts`
+          `Couldn't find an ideal position for prize ${i + 1} after ${attempts} attempts`,
         );
 
         // Skip adding this prize if we already have at least one prize and couldn't find a good position
@@ -119,27 +111,20 @@ const PrizeSquares = ({
     }
 
     return newPrizes;
-  }, [
-    gridSize,
-    maxCoord,
-    minCoord,
-    tilesNeeded,
-    onPrizesGenerated,
-    externalPrizes,
-  ]);
+    // eslint-disable-next-line react-compiler/react-compiler
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gridSize, maxCoord, minCoord, tilesNeeded, onPrizesGenerated, externalPrizes]);
 
   // Use either the external prizes or the generated ones
   const prizesToRender =
-    externalPrizes && externalPrizes.length > 0
-      ? externalPrizes
-      : generatedPrizes;
+    externalPrizes && externalPrizes.length > 0 ? externalPrizes : generatedPrizes;
 
   // Effect to log prize progress changes
   useEffect(() => {
     if (prizesToRender.length > 0) {
       console.log(
         "Prize progress values:",
-        prizesToRender.map((p) => p.progress)
+        prizesToRender.map((p) => p.progress),
       );
     }
   }, [prizesToRender]);
@@ -151,9 +136,7 @@ const PrizeSquares = ({
     prizesToRender.forEach((prize, index) => {
       // Skip rendering fully mined prizes (progress = 100)
       if (prize.progress >= 100) {
-        console.log(
-          `Prize ${index} is fully mined (${prize.progress}%), not rendering`
-        );
+        console.log(`Prize ${index} is fully mined (${prize.progress}%), not rendering`);
         return;
       }
 
@@ -173,7 +156,7 @@ const PrizeSquares = ({
       }
 
       console.log(
-        `Rendering prize ${index} with progress ${prize.progress}% and color ${color.toString(16)}`
+        `Rendering prize ${index} with progress ${prize.progress}% and color ${color.toString(16)}`,
       );
 
       // Create a material for the prize square with appropriate color
@@ -199,34 +182,39 @@ const PrizeSquares = ({
       // Add the prize square
       elements.push(
         <sprite
+          // eslint-disable-next-line @eslint-react/no-array-index-key
           key={`prize-${index}-${prize.progress}`} // Add progress to key to force re-render
           position={[prize.x * worldTileSize, prize.y * worldTileSize, 0.1]} // Slightly above the tiles
-          scale={[worldTileSize, worldTileSize, 1]}>
+          scale={[worldTileSize, worldTileSize, 1]}
+        >
           <primitive object={material} />
-        </sprite>
+        </sprite>,
       );
 
       // Add progress bar background (black bar)
       if (prize.progress >= 5) {
         elements.push(
           <sprite
+            // eslint-disable-next-line @eslint-react/no-array-index-key
             key={`prize-bg-${index}-${prize.progress}`}
             position={[
               prize.x * worldTileSize,
               prize.y * worldTileSize + worldTileSize * 0.7,
               0.15,
             ]} // Position above the prize
-            scale={[worldTileSize * 1, worldTileSize * 0.15, 1]}>
+            scale={[worldTileSize * 1, worldTileSize * 0.15, 1]}
+          >
             {" "}
             {/* Make it 80% width of the prize and thinner */}
             <primitive object={progressBarBgMaterial} />
-          </sprite>
+          </sprite>,
         );
 
         // Add progress bar fill (red bar that shows progress)
         if (prize.progress > 0) {
           elements.push(
             <sprite
+              // eslint-disable-next-line @eslint-react/no-array-index-key
               key={`prize-fill-${index}-${prize.progress}`}
               position={[
                 // Position needs to be adjusted based on progress
@@ -239,11 +227,12 @@ const PrizeSquares = ({
                 worldTileSize * 1 * (prize.progress / 100),
                 worldTileSize * 0.15,
                 1,
-              ]}>
+              ]}
+            >
               {" "}
               {/* Scale width based on progress */}
               <primitive object={progressBarFillMaterial} />
-            </sprite>
+            </sprite>,
           );
         }
       }

@@ -29,6 +29,7 @@ function GameGrid({ onPrizesGenerated, prizeLocations }: GameGridProps) {
     if (!tilesetTexture) return null;
 
     // Set texture filtering to nearest for pixel-perfect rendering
+    // eslint-disable-next-line react-compiler/react-compiler
     tilesetTexture.magFilter = THREE.NearestFilter;
     tilesetTexture.minFilter = THREE.NearestFilter;
 
