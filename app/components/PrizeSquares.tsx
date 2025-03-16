@@ -102,7 +102,12 @@ const PrizeSquares = ({
       }
 
       // Add to our prize squares array with initial progress of 0
-      newPrizes.push({ x: randomX!, y: randomY!, progress: 0, amount: 0.5 });
+      newPrizes.push({
+        x: randomX!,
+        y: randomY!,
+        progress: 0,
+        amount: (Math.floor(Math.random() * 10) + 1) * 0.1,
+      });
 
       // Log the prize positions for debugging
       console.log(`Prize ${i + 1} placed at (${randomX}, ${randomY})`);

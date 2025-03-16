@@ -31,7 +31,7 @@ function Home() {
 
   // Distance threshold for showing the Mine button (in tile units)
   // Set to exactly 2 tiles as requested
-  const PRIZE_INTERACTION_DISTANCE_IN_TILES = 2;
+  const PRIZE_INTERACTION_DISTANCE_IN_TILES = 1.6;
 
   // Convert tile distance to world units
   const PRIZE_INTERACTION_DISTANCE =
