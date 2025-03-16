@@ -22,6 +22,7 @@ function Home() {
   const [nearestPrizeIndex, setNearestPrizeIndex] = useState<number>(-1);
   const [showMiningSuccess, setShowMiningSuccess] = useState(false);
   const [minedPrizesCount, setMinedPrizesCount] = useState(0);
+  const [balance, setBalance] = useState(0);
 
   // Grid size should match the one in GameGrid
   const gridSize = 20;
@@ -151,6 +152,7 @@ function Home() {
 
       // Increment mined prizes count
       setMinedPrizesCount((prev) => prev + 1);
+      setBalance((prev) => prev + updatedPrizes[nearestPrizeIndex].amount);
 
       // Hide success message after 3 seconds
       setTimeout(() => {
@@ -172,6 +174,20 @@ function Home() {
         height: "100vh",
         overflow: "hidden",
       }}>
+      <div
+        style={{
+          position: "fixed",
+          top: "1rem",
+          left: "1rem",
+          fontSize: "1rem",
+          color: "white",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          padding: "0.5rem",
+          borderRadius: "0.5rem",
+          zIndex: 100,
+        }}>
+        Balance: {balance} TON
+      </div>
       <div
         id="UI-layer"
         style={{
@@ -213,28 +229,6 @@ function Home() {
               position: "relative",
             }}>
             Mine
-            {nearestPrize && (
-              <div
-                style={{
-                  position: "absolute",
-                  bottom: "-1.5rem",
-                  left: 0,
-                  width: "100%",
-                  height: "0.5rem",
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  borderRadius: "0.25rem",
-                  overflow: "hidden",
-                }}>
-                <div
-                  style={{
-                    height: "100%",
-                    width: `${nearestPrize.progress}%`,
-                    backgroundColor: "red",
-                    transition: "width 0.3s ease-in-out",
-                  }}
-                />
-              </div>
-            )}
           </div>
         )}
       </div>
@@ -263,6 +257,9 @@ function Home() {
           Prize successfully mined!
           <div style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
             {minedPrizesCount} of 3 prizes collected
+          </div>
+          <div style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
+            Balance: {balance} TON
           </div>
         </div>
       )}

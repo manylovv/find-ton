@@ -6,6 +6,7 @@ interface PrizeSquare {
   x: number;
   y: number;
   progress: number;
+  amount: number;
 }
 
 interface PrizeSquaresProps {
@@ -14,7 +15,6 @@ interface PrizeSquaresProps {
   prizes?: PrizeSquare[]; // Add this prop to receive updated prizes from parent
 }
 
-// version of prize squares that are not far from each other (simplify version)
 const PrizeSquares = ({
   gridSize,
   onPrizesGenerated,
@@ -40,7 +40,8 @@ const PrizeSquares = ({
     const newPrizes: PrizeSquare[] = [];
 
     // Define minimum distance between prizes (in grid units)
-    const minDistance = Math.floor(tilesNeeded / 6); // About 1/6 of the playable area width
+    // Ensure a minimum distance of at least 2 tiles, or 1/4 of the playable area width, whichever is larger
+    const minDistance = Math.max(2, Math.floor((maxCoord - minCoord) / 4));
     console.log(`Minimum distance between prizes: ${minDistance} tiles`);
 
     // Helper function to calculate distance between two points
@@ -87,14 +88,21 @@ const PrizeSquares = ({
       }
 
       // If we couldn't find a position after max attempts, use the last generated one
+      // but only if we already have fewer than 2 prizes (to ensure at least some prizes appear)
       if (!foundPosition) {
         console.warn(
           `Couldn't find an ideal position for prize ${i + 1} after ${attempts} attempts`
         );
+
+        // Skip adding this prize if we already have at least one prize and couldn't find a good position
+        if (newPrizes.length > 0) {
+          console.warn(`Skipping prize ${i + 1} due to space constraints`);
+          continue;
+        }
       }
 
       // Add to our prize squares array with initial progress of 0
-      newPrizes.push({ x: randomX!, y: randomY!, progress: 0 });
+      newPrizes.push({ x: randomX!, y: randomY!, progress: 0, amount: 0.5 });
 
       // Log the prize positions for debugging
       console.log(`Prize ${i + 1} placed at (${randomX}, ${randomY})`);
@@ -170,7 +178,20 @@ const PrizeSquares = ({
         transparent: true,
       });
 
-      // Create the prize square sprite
+      // Create progress bar materials
+      const progressBarBgMaterial = new THREE.SpriteMaterial({
+        color: 0x000000,
+        opacity: 0.5,
+        transparent: true,
+      });
+
+      const progressBarFillMaterial = new THREE.SpriteMaterial({
+        color: 0xff0000, // Red progress bar
+        opacity: 0.8,
+        transparent: true,
+      });
+
+      // Add the prize square
       elements.push(
         <sprite
           key={`prize-${index}-${prize.progress}`} // Add progress to key to force re-render
@@ -179,6 +200,48 @@ const PrizeSquares = ({
           <primitive object={material} />
         </sprite>
       );
+
+      // Add progress bar background (black bar)
+      if (prize.progress >= 5) {
+        elements.push(
+          <sprite
+            key={`prize-bg-${index}-${prize.progress}`}
+            position={[
+              prize.x * worldTileSize,
+              prize.y * worldTileSize + worldTileSize * 0.7,
+              0.15,
+            ]} // Position above the prize
+            scale={[worldTileSize * 1, worldTileSize * 0.15, 1]}>
+            {" "}
+            {/* Make it 80% width of the prize and thinner */}
+            <primitive object={progressBarBgMaterial} />
+          </sprite>
+        );
+
+        // Add progress bar fill (red bar that shows progress)
+        if (prize.progress > 0) {
+          elements.push(
+            <sprite
+              key={`prize-fill-${index}-${prize.progress}`}
+              position={[
+                // Position needs to be adjusted based on progress
+                prize.x * worldTileSize -
+                  (worldTileSize * 1 * (1 - prize.progress / 100)) / 2,
+                prize.y * worldTileSize + worldTileSize * 0.7,
+                0.16, // Slightly above the background
+              ]}
+              scale={[
+                worldTileSize * 1 * (prize.progress / 100),
+                worldTileSize * 0.15,
+                1,
+              ]}>
+              {" "}
+              {/* Scale width based on progress */}
+              <primitive object={progressBarFillMaterial} />
+            </sprite>
+          );
+        }
+      }
     });
 
     return elements;

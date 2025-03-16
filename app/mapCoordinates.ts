@@ -1,5 +1,6 @@
 export const mapCoordinates = [
   {
+    // real coordinates
     // tiles: [
     //   {
     //     x: -25,
@@ -15002,6 +15003,7 @@ export const mapCoordinates = [
     //     tileY: 14,
     //   },
     // ],
+    // test coordinates
     timestamp: 1741966220931,
     tiles: [
       {
