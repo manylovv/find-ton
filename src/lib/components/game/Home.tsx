@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { JoystickDirectionType } from "~/lib/types/joystick";
 import { PrizeSquare } from "./PrizeSquares";
 import RetroSprite from "./RetroSpite";
+import { MAX_MINING_PROGRESS, MINING_INCREMENT, PRIZE_INTERACTION_DISTANCE_IN_TILES, WORLD_TILE_SIZE } from "~/lib/constants/mapConstants";
+import { usePrizeInteraction } from "~/lib/hooks/usePrizeInteraction";
 
 function Home() {
   const [initialized, setInitialized] = useState(false);
@@ -15,9 +17,12 @@ function Home() {
   const [playerPosition, setPlayerPosition] = useState<[number, number, number]>([
     0, 0, 0,
   ]);
-  const [isNearPrize, setIsNearPrize] = useState(false);
-  const [nearestPrize, setNearestPrize] = useState<PrizeSquare | null>(null);
-  const [nearestPrizeIndex, setNearestPrizeIndex] = useState<number>(-1);
+ const { isNearPrize, nearestPrizeIndex } = usePrizeInteraction(
+    prizeLocations,
+    playerPosition,
+    WORLD_TILE_SIZE,
+    PRIZE_INTERACTION_DISTANCE_IN_TILES
+  );
   const [showMiningSuccess, setShowMiningSuccess] = useState(false);
   const [minedPrizesCount, setMinedPrizesCount] = useState(0);
   const [balance, setBalance] = useState(0);
@@ -25,20 +30,6 @@ function Home() {
   console.log("rendering Home");
 
   // Grid size should match the one in GameGrid
-  const gridSize = 20;
-  // World tile size calculation (should match the one in GameGrid)
-  const worldTileSize = gridSize / 10;
-
-  // Distance threshold for showing the Mine button (in tile units)
-  // Set to exactly 2 tiles as requested
-  const PRIZE_INTERACTION_DISTANCE_IN_TILES = 1.6;
-
-  // Convert tile distance to world units
-  // const PRIZE_INTERACTION_DISTANCE = PRIZE_INTERACTION_DISTANCE_IN_TILES * worldTileSize;
-
-  // Mining increment value
-  const MINING_INCREMENT = 5;
-  const MAX_MINING_PROGRESS = 100;
 
   useEffect(() => {
     document.body.style.margin = "0";
@@ -55,65 +46,7 @@ function Home() {
   }, []);
 
   // Check if player is near any prize
-  useEffect(() => {
-    if (prizeLocations.length === 0 || !playerPosition) return;
-
-    // Convert player position from world units to tile coordinates
-    const playerTileX = playerPosition[0] / worldTileSize;
-    const playerTileY = playerPosition[1] / worldTileSize;
-
-    let nearestDistance = Infinity;
-    let closestPrize: PrizeSquare | null = null;
-    let closestPrizeIndex = -1;
-    let isNear = false;
-
-    // Calculate if player is near any prize
-    for (let i = 0; i < prizeLocations.length; i++) {
-      const prize = prizeLocations[i];
-
-      // Skip prizes that are fully mined
-      if (prize.progress >= MAX_MINING_PROGRESS) continue;
-
-      // Calculate Manhattan distance (grid-based distance)
-      const xDistance = Math.abs(prize.x - playerTileX);
-      const yDistance = Math.abs(prize.y - playerTileY);
-
-      // Use Manhattan distance for a more grid-like interaction
-      const distance = Math.max(xDistance, yDistance);
-
-      // Track the nearest prize
-      if (distance < nearestDistance) {
-        nearestDistance = distance;
-        closestPrize = prize;
-        closestPrizeIndex = i;
-      }
-
-      // Check if within interaction distance
-      if (distance <= PRIZE_INTERACTION_DISTANCE_IN_TILES) {
-        isNear = true;
-      }
-    }
-
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
-    setIsNearPrize(isNear);
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
-    setNearestPrize(closestPrize);
-    // eslint-disable-next-line @eslint-react/hooks-extra/no-direct-set-state-in-use-effect
-    setNearestPrizeIndex(closestPrizeIndex);
-
-    // Debug information
-    if (isNear && closestPrize) {
-      console.log(
-        `Player near prize at (${closestPrize.x}, ${closestPrize.y}), distance: ${nearestDistance.toFixed(2)} tiles, progress: ${closestPrize.progress}%`,
-      );
-    }
-  }, [
-    playerPosition,
-    prizeLocations,
-    worldTileSize,
-    PRIZE_INTERACTION_DISTANCE_IN_TILES,
-    MAX_MINING_PROGRESS,
-  ]);
+  
 
   // Handler for player position updates
   const handlePlayerPositionUpdate = (position: [number, number, number]) => {
@@ -131,7 +64,7 @@ function Home() {
     updatedPrizes[nearestPrizeIndex] = {
       ...updatedPrizes[nearestPrizeIndex],
       progress: Math.min(
-        updatedPrizes[nearestPrizeIndex].progress + MINING_INCREMENT,
+        updatedPrizes[nearestPrizeIndex].progress + MINING_INCREMENT, 
         MAX_MINING_PROGRESS,
       ),
     };
@@ -217,7 +150,7 @@ function Home() {
           insideMode={true}
           directionCount={DirectionCount.Nine}
         />
-        {isNearPrize && nearestPrize && (
+        {isNearPrize && (
           <div
             onClick={handleMine}
             style={{
