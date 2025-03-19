@@ -15,13 +15,7 @@ export const GameWorld = memo(() => {
   }, []);
 
   return (
-    <Canvas
-      id="threejs-layer"
-      style={{
-        width: "100vw",
-        height: "100vh",
-      }}
-    >
+    <Canvas id="threejs-layer" className="w-screen h-screen">
       <color attach="background" args={["#87CEEB"]} />
       <OrthographicCamera
         makeDefault

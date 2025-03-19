@@ -8,29 +8,11 @@ const SuccessNotification = memo(() => {
   if (!showMiningSuccess) return null;
 
   return (
-    <div
-      style={{
-        position: "absolute",
-        top: "20%",
-        left: "50%",
-        transform: "translateX(-50%)",
-        zIndex: 100,
-        backgroundColor: "rgba(0, 0, 0, 0.8)",
-        color: "#FFD700",
-        padding: "1rem 2rem",
-        borderRadius: "1rem",
-        fontSize: "1.5rem",
-        fontWeight: "bold",
-        textAlign: "center",
-        animation: "fadeInOut 3s ease-in-out",
-      }}
-    >
-      <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🎉 Success! 🎉</div>
+    <div className="absolute top-[20%] left-1/2 -translate-x-1/2 z-100 bg-black/80 text-yellow-400 px-8 py-4 rounded-2xl text-2xl font-bold text-center animate-fadeInOut">
+      <div className="text-4xl mb-2">🎉 Success! 🎉</div>
       Prize successfully mined!
-      <div style={{ fontSize: "1rem", marginTop: "0.5rem" }}>
-        {minedPrizesCount} of 3 prizes collected
-      </div>
-      <div style={{ fontSize: "1rem", marginTop: "0.5rem" }}>Balance: {balance} TON</div>
+      <div className="text-base mt-2">{minedPrizesCount} of 3 prizes collected</div>
+      <div className="text-base mt-2">Balance: {balance} TON</div>
     </div>
   );
 });

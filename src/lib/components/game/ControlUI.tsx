@@ -26,17 +26,7 @@ export const ControlUI = memo(() => {
   return (
     <div
       id="UI-layer"
-      style={{
-        position: "absolute",
-        zIndex: 50,
-        bottom: "10rem",
-        padding: "0 3rem",
-        width: "100%",
-        height: "4rem",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
+      className="absolute z-50 bottom-40 px-12 w-full h-16 flex justify-between items-center"
     >
       <Joystick
         baseRadius={60}
@@ -49,18 +39,7 @@ export const ControlUI = memo(() => {
       {isNearPrize && (
         <div
           onClick={() => handleMine(isNearPrize, nearestPrizeIndex)}
-          style={{
-            fontSize: "2rem",
-            fontWeight: "bold",
-            color: "white",
-            textAlign: "center",
-            border: "4px solid white",
-            borderRadius: "1rem",
-            padding: "0.5rem",
-            backgroundColor: "rgba(0, 0, 0, 0.5)",
-            cursor: "pointer",
-            position: "relative",
-          }}
+          className="text-4xl font-bold text-white text-center border-4 border-white rounded-2xl p-2 bg-black/50 cursor-pointer relative"
         >
           Mine
         </div>

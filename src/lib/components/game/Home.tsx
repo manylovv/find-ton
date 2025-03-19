@@ -20,15 +20,7 @@ function Home() {
   console.log("rendering home");
 
   return (
-    <div
-      style={{
-        position: "fixed",
-        inset: 0,
-        width: "100vw",
-        height: "100vh",
-        overflow: "hidden",
-      }}
-    >
+    <div className="fixed inset-0 w-screen h-screen overflow-hidden">
       <BalanceDisplay />
       <ControlUI />
       <SuccessNotification />
