@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
 import { MAX_MINING_PROGRESS, PRIZE_INTERACTION_DISTANCE_IN_TILES, WORLD_TILE_SIZE } from "~/lib/constants/mapConstants";
-
-
-interface PrizeLocation {
-  x: number;
-  y: number;
-  progress: number;
-  amount: number;
-}
+import { PrizeSquare } from "~/lib/components/game/PrizeSquares";
 
 export function usePrizeInteraction(
-  prizeLocations: PrizeLocation[],
+  prizeLocations: PrizeSquare[],
   playerPosition: [number, number, number],
   worldTileSize: number,
   interactionDistanceInTiles: number
