@@ -1,12 +1,6 @@
 import { useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
 
-/**
- * Custom hook for handling sprite animation frames
- * @param isMoving Boolean indicating if the sprite is moving
- * @param frameRate Number of frames per second
- * @returns Current frame index for the animation
- */
 export function useSpriteAnimation(isMoving: boolean, frameRate = 8) {
   const [frameIndex, setFrameIndex] = useState(0);
   const frameTimer = useRef(0);
