@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import * as THREE from "three";
+import { cols, rows } from "../constants/spriteConstants";
 
 export const useSpriteTexture = (
   texture: THREE.Texture | null,
@@ -13,13 +14,6 @@ export const useSpriteTexture = (
     texture.minFilter = THREE.NearestFilter;
 
     const newTexture = texture.clone();
-
-    const spriteWidth = 16;
-    const spriteHeight = 16;
-    const sheetWidth = 192;
-    const sheetHeight = 160;
-    const cols = sheetWidth / spriteWidth;
-    const rows = sheetHeight / spriteHeight;
 
     let row: number, col: number;
     switch (direction) {
