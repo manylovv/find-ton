@@ -40,7 +40,7 @@ const PrizeSquares = ({
 
     // Define minimum distance between prizes (in grid units)
     // Ensure a minimum distance of at least 2 tiles, or 1/4 of the playable area width, whichever is larger
-    const minDistance = Math.max(2, Math.floor((maxCoord - minCoord) / 4));
+    const minDistance = Math.max(4, Math.floor((maxCoord - minCoord) / 4));
     console.log(`Minimum distance between prizes: ${minDistance} tiles`);
 
     // Helper function to calculate distance between two points
@@ -98,7 +98,7 @@ const PrizeSquares = ({
         x: randomX!,
         y: randomY!,
         progress: 0,
-        amount: (Math.floor(Math.random() * 10) + 1) * 0.1,
+        amount: Number(((Math.floor(Math.random() * 10) + 1) * 0.1).toFixed(1)),
       });
 
       // Log the prize positions for debugging
