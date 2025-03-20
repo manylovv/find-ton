@@ -7,14 +7,13 @@ import {
 } from "~/lib/constants/mapConstants";
 import { usePrizeInteraction } from "~/lib/hooks/prizes/usePrizeInteraction";
 import { handleMine, store } from "~/lib/state/game";
-import { PrizeSquare } from "../game/PrizeSquares";
 
 export const ControlUI = memo(() => {
   const { playerPosition, prizeLocations } = useSnapshot(store);
 
   const { isNearPrize, nearestPrizeIndex } = usePrizeInteraction(
-    prizeLocations as PrizeSquare[],
-    playerPosition as [number, number, number],
+    prizeLocations,
+    playerPosition,
     WORLD_TILE_SIZE,
     PRIZE_INTERACTION_DISTANCE_IN_TILES,
   );

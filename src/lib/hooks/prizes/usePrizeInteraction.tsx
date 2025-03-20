@@ -3,8 +3,8 @@ import { PrizeSquare } from "~/lib/components/game/PrizeSquares";
 import { MAX_MINING_PROGRESS } from "~/lib/constants/mapConstants";
 
 export function usePrizeInteraction(
-  prizeLocations: PrizeSquare[],
-  playerPosition: [number, number, number],
+  prizeLocations: readonly PrizeSquare[],
+  playerPosition: readonly [number, number, number],
   worldTileSize: number,
   interactionDistanceInTiles: number,
 ) {
