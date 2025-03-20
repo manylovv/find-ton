@@ -1,6 +1,6 @@
 import { ReactNode, useMemo } from "react";
 import * as THREE from "three";
-import { TileData } from "../types/tileData";
+import { TileData } from "../../types/tileData";
 
 interface UseTiledGridProps {
   tilesetTexture: THREE.Texture | null;

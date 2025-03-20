@@ -1,7 +1,7 @@
 import { useTexture } from "@react-three/drei";
 import { mapCoordinates } from "~/lib/constants/mapCoordinates";
-import { useStoneBorder } from "~/lib/hooks/useStoneBorder";
-import { useTiledGrid } from "~/lib/hooks/useTiledGrid";
+import { useStoneBorder } from "~/lib/hooks/grids/useStoneBorder";
+import { useTiledGrid } from "~/lib/hooks/grids/useTiledGrid";
 import PrizeSquares, { PrizeSquare } from "./PrizeSquares";
 
 interface GameGridProps {

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import { MAX_MINING_PROGRESS, PRIZE_INTERACTION_DISTANCE_IN_TILES, WORLD_TILE_SIZE } from "~/lib/constants/mapConstants";
 import { PrizeSquare } from "~/lib/components/game/PrizeSquares";
+import { MAX_MINING_PROGRESS } from "~/lib/constants/mapConstants";
 
 export function usePrizeInteraction(
   prizeLocations: PrizeSquare[],
   playerPosition: [number, number, number],
   worldTileSize: number,
-  interactionDistanceInTiles: number
+  interactionDistanceInTiles: number,
 ) {
   const [isNearPrize, setIsNearPrize] = useState(false);
   const [nearestPrizeIndex, setNearestPrizeIndex] = useState(-1);

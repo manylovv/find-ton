@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import * as THREE from "three";
-import { cols, rows } from "../constants/spriteConstants";
+import { cols, rows } from "../../constants/spriteConstants";
 
 export const useSpriteTexture = (
   texture: THREE.Texture | null,

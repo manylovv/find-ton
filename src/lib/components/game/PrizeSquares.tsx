@@ -1,6 +1,5 @@
-import { useEffect } from "react";
-import { useGeneratePrizes } from "~/lib/hooks/useGeneratePrizes";
-import { useRenderPrizes } from "~/lib/hooks/useRenderPrizes";
+import { useGeneratePrizes } from "~/lib/hooks/prizes/useGeneratePrizes";
+import { useRenderPrizes } from "~/lib/hooks/prizes/useRenderPrizes";
 
 interface PrizeSquare {
   x: number;

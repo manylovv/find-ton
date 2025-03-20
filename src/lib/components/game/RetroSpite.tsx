@@ -1,10 +1,10 @@
 import { useTexture } from "@react-three/drei";
 import CameraFollower from "~/lib/components/game/CameraFollower";
-import { usePosition } from "~/lib/hooks/usePosition";
-import { useSpriteAnimation } from "~/lib/hooks/useSpriteAnimation";
-import useWASDControls from "~/lib/hooks/useWASDControls";
+import useWASDControls from "~/lib/hooks/control/useWASDControls";
+import { usePosition } from "~/lib/hooks/position/usePosition";
+import { useSpriteAnimation } from "~/lib/hooks/sprites/useSpriteAnimation";
 import { JoystickDirectionType } from "~/lib/types/joystick";
-import { useSpriteTexture } from "../../hooks/useSpriteTexture";
+import { useSpriteTexture } from "../../hooks/sprites/useSpriteTexture";
 
 interface RetroSpriteProps {
   joystickDirection: JoystickDirectionType;
