@@ -10,6 +10,7 @@ export const usersTable = pgTable("user", {
   lastName: varchar("last_name", { length: 255 }),
   photoUrl: varchar("photo_url", { length: 255 }),
   username: varchar("username", { length: 255 }),
+  balance: integer("balance").default(0).notNull(),
 });
 
 export type User = InferSelectModel<typeof usersTable>;

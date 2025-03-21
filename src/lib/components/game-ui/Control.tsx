@@ -5,8 +5,9 @@ import {
   PRIZE_INTERACTION_DISTANCE_IN_TILES,
   WORLD_TILE_SIZE,
 } from "~/lib/constants/mapConstants";
+import { handleMine } from "~/lib/gameUtils";
 import { usePrizeInteraction } from "~/lib/hooks/prizes/usePrizeInteraction";
-import { handleMine, store } from "~/lib/state/game";
+import { store } from "~/lib/state/game";
 
 export const ControlUI = memo(() => {
   const { playerPosition, prizeLocations } = useSnapshot(store);
