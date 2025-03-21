@@ -1,9 +1,19 @@
+import { useQuery } from "@tanstack/react-query";
 import { memo } from "react";
 import { useSnapshot } from "valtio";
+import { getUser } from "~/lib/server/actions/getUser";
+import { queryKeys } from "~/queryKeys";
 import { store } from "../../state/game";
 
 const SuccessNotification = memo(() => {
-  const { showMiningSuccess, minedPrizesCount, balance } = useSnapshot(store);
+  const { showMiningSuccess, minedPrizesCount } = useSnapshot(store);
+
+  const { data: user } = useQuery({
+    queryKey: queryKeys.getUser,
+    queryFn: getUser,
+  });
+
+  const balance = user?.balance;
 
   if (!showMiningSuccess) return null;
 

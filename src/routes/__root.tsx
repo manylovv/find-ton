@@ -7,7 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { init, mockTelegramEnv } from "@telegram-apps/sdk";
 import { useEffect } from "react";
-import { AuthProvider } from "~/lib/components/authProvider";
+import { AuthProvider } from "~/lib/components/AuthProvider";
 import appCss from "~/lib/styles/app.css?url";
 
 // const getUser = createServerFn({ method: "GET" }).handler(async () => {

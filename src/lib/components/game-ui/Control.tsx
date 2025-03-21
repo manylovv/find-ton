@@ -7,17 +7,18 @@ import {
 } from "~/lib/constants/mapConstants";
 import { handleMine } from "~/lib/gameUtils";
 import { usePrizeInteraction } from "~/lib/hooks/prizes/usePrizeInteraction";
+import { useBalanceUpdate } from "~/lib/hooks/user/useBalanceUpdate";
 import { store } from "~/lib/state/game";
 
 export const ControlUI = memo(() => {
   const { playerPosition, prizeLocations } = useSnapshot(store);
-
   const { isNearPrize, nearestPrizeIndex } = usePrizeInteraction(
     prizeLocations,
     playerPosition,
     WORLD_TILE_SIZE,
     PRIZE_INTERACTION_DISTANCE_IN_TILES,
   );
+  const updateBalanceMutation = useBalanceUpdate();
 
   const handleJoystickChange = useCallback((direction: Direction) => {
     store.joystickDirection = direction === Direction.Center ? null : direction;
@@ -38,7 +39,9 @@ export const ControlUI = memo(() => {
       />
       {isNearPrize && (
         <div
-          onClick={() => handleMine(isNearPrize, nearestPrizeIndex)}
+          onClick={() =>
+            handleMine(isNearPrize, nearestPrizeIndex, updateBalanceMutation)
+          }
           className="text-4xl font-bold text-white text-center border-4 border-white rounded-2xl p-2 bg-black/50 cursor-pointer relative"
         >
           Mine
