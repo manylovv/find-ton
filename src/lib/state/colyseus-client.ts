@@ -1,3 +1,3 @@
 import { Client } from "colyseus.js";
 
-export const client = new Client("http://localhost:2567");
+export const client = new Client(import.meta.env.VITE_COLYSEUS_SERVER_URL);
