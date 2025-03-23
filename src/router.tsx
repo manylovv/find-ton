@@ -28,7 +28,6 @@ export function createRouter() {
       defaultNotFoundComponent: NotFound,
       scrollRestoration: true,
       defaultStructuralSharing: true,
-      defaultSsr: false,
     }),
     queryClient,
   );
