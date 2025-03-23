@@ -65,16 +65,16 @@ function RootComponent() {
       text_color: "#f5f5f5",
     } as const;
 
-    if (import.meta.env.DEV) {
-      mockTelegramEnv({
-        launchParams: {
-          tgWebAppPlatform: "web",
-          tgWebAppVersion: "1.0.0",
-          tgWebAppData: import.meta.env.VITE_MOCK_INIT_DATA,
-          tgWebAppThemeParams: themeParams,
-        },
-      });
-    }
+    // if (import.meta.env.DEV) {
+    mockTelegramEnv({
+      launchParams: {
+        tgWebAppPlatform: "web",
+        tgWebAppVersion: "1.0.0",
+        tgWebAppData: import.meta.env.VITE_MOCK_INIT_DATA,
+        tgWebAppThemeParams: themeParams,
+      },
+    });
+    // }
 
     init();
   }, []);
