@@ -11,8 +11,10 @@ export const authMiddleware = createMiddleware()
     });
   })
   .server(async ({ next, data, context }) => {
-    console.log("context", context);
-    validate(context.initData as string, process.env.BOT_TOKEN!);
+    console.log("server hi", context.initData, process.env.BOT_TOKEN);
+    validate(context.initData as string, process.env.BOT_TOKEN!, {
+      expiresIn: 0,
+    });
     const initData = parse(context.initData as string);
 
     const telegramUser = initData.user;
