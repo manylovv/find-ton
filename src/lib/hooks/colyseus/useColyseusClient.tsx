@@ -1,6 +1,6 @@
 import { Room } from "colyseus.js";
 import { useEffect, useState } from "react";
-import { client } from "~/lib/colyseus/client";
+import { client } from "~/lib/state/colyseus-client";
 import { store } from "~/lib/state/game";
 
 // Types matching the server schemas
