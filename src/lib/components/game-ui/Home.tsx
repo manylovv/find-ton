@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSnapshot } from "valtio";
 import { initializeGame, store } from "~/lib/state/game";
-import { GameWorld } from "../game/ThreeLayer";
+import { GameWorld } from "../game/GameWorld";
 import { BalanceDisplay } from "./BalanceDisplay";
 import { ControlUI } from "./Control";
 import SuccessNotification from "./SuccessNotification";

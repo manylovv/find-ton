@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as SigninImport } from './routes/signin'
+import { Route as ColyseusImport } from './routes/colyseus'
 import { Route as DashboardRouteImport } from './routes/dashboard/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as DashboardIndexImport } from './routes/dashboard/index'
@@ -21,6 +22,12 @@ import { Route as DashboardIndexImport } from './routes/dashboard/index'
 const SigninRoute = SigninImport.update({
   id: '/signin',
   path: '/signin',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ColyseusRoute = ColyseusImport.update({
+  id: '/colyseus',
+  path: '/colyseus',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRoute
     }
+    '/colyseus': {
+      id: '/colyseus'
+      path: '/colyseus'
+      fullPath: '/colyseus'
+      preLoaderRoute: typeof ColyseusImport
+      parentRoute: typeof rootRoute
+    }
     '/signin': {
       id: '/signin'
       path: '/signin'
@@ -94,12 +108,14 @@ const DashboardRouteRouteWithChildren = DashboardRouteRoute._addFileChildren(
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/colyseus': typeof ColyseusRoute
   '/signin': typeof SigninRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/colyseus': typeof ColyseusRoute
   '/signin': typeof SigninRoute
   '/dashboard': typeof DashboardIndexRoute
 }
@@ -108,28 +124,31 @@ export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRouteRouteWithChildren
+  '/colyseus': typeof ColyseusRoute
   '/signin': typeof SigninRoute
   '/dashboard/': typeof DashboardIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/signin' | '/dashboard/'
+  fullPaths: '/' | '/dashboard' | '/colyseus' | '/signin' | '/dashboard/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/signin' | '/dashboard'
-  id: '__root__' | '/' | '/dashboard' | '/signin' | '/dashboard/'
+  to: '/' | '/colyseus' | '/signin' | '/dashboard'
+  id: '__root__' | '/' | '/dashboard' | '/colyseus' | '/signin' | '/dashboard/'
   fileRoutesById: FileRoutesById
 }
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRouteRoute: typeof DashboardRouteRouteWithChildren
+  ColyseusRoute: typeof ColyseusRoute
   SigninRoute: typeof SigninRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRouteRoute: DashboardRouteRouteWithChildren,
+  ColyseusRoute: ColyseusRoute,
   SigninRoute: SigninRoute,
 }
 
@@ -145,6 +164,7 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/dashboard",
+        "/colyseus",
         "/signin"
       ]
     },
@@ -156,6 +176,9 @@ export const routeTree = rootRoute
       "children": [
         "/dashboard/"
       ]
+    },
+    "/colyseus": {
+      "filePath": "colyseus.tsx"
     },
     "/signin": {
       "filePath": "signin.tsx"

@@ -10,10 +10,12 @@ export const useSpriteTexture = (
   return useMemo(() => {
     if (!texture) return null;
 
-    texture.magFilter = THREE.NearestFilter;
-    texture.minFilter = THREE.NearestFilter;
-
+    // Clone the texture first to avoid mutating the original
     const newTexture = texture.clone();
+
+    // Apply filters to the cloned texture
+    newTexture.magFilter = THREE.NearestFilter;
+    newTexture.minFilter = THREE.NearestFilter;
 
     let row: number, col: number;
     switch (direction) {
